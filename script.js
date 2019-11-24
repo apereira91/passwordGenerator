@@ -1,24 +1,55 @@
-function generate() {
-    var upperCase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    var lowerCase = "abcdefghijklmnopqrstuvwxyz";
-    var numbers = "0123456789";
-    var specialChar = '!"#$%&\'()*+,-./:;<=>?@^[\\]^_`{|}~';
+var txtarea = document.getElementById("password");
+var copyBtn = document.getElementById("copy");
+var generateBtn = document.getElementById("generate");
 
-    var add = upperCase + lowerCase + numbers + specialChar;
+generateBtn.addEventListener("click", function(){
+    txtarea.value="";
 
-    var password="";
+    var length = prompt("How many characters would you like for your password?");
+    var specialChar = confirm("Would you like to include special characters?");
+    var numChar = confirm("Would you like to use numbers?");
+    var upperCaseChar = confirm("Would you like to use uppercase alphabets?");
+    var lowerCaseChar = confirm("Would you like to use lowercase alphabets?");
+    
+    var temps = "";
+    var password = "";
 
-    for (var i = 0; i < add.length; i++) {
-        var char = Math.floor(Math.random() * add.length);
-        password += add.substring(char, char + 1);
+    if ((length < 8) || (length > 128)) {
+        alert("Password must at least 8 characters and less than 128 characters");
     }
 
-    return password;
+    if (specialChar) {
+        specialChar = '!@#$%^&*()_+~`|}{[]\:;?><,./-=';
+        temps += specialChar;
+    }
 
-}
-var generateBtn = document.querySelector("#generate");
-var passwordTxt = document.querySelector("#password");
+    if (numChar) {
+        numChar = '0123456789';
+        temps += numChar;
+    }
 
-generateBtn.addEventListener("click",function(){
-    passwordTxt.value = generate();
+    if (upperCaseChar) {
+        upperCaseChar = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        temps += upperCaseChar;
+    }
+    
+    if (lowerCaseChar) {
+        lowerCaseChar = 'abcdefghijklmnopqrstuvwxyz';
+        temps += lowerCaseChar;
+    }
+    //temps = '!@#$%^&*()_+~`|}{[]\:;?><,./-=0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+
+    for (var i = 0; i < length; i++) {
+        password += temps.charAt(Math.floor(Math.random() * temps.length));
+    }
+
+    txtarea.value += password;
+
+});
+
+copyBtn.addEventListener("click", function() {
+    txtarea.select();
+    document.execCommand("copy");
+
+    alert("Password has been copied to clipboard");
 })
