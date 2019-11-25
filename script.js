@@ -1,9 +1,9 @@
-var txtarea = document.getElementById("password");
+var text = document.getElementById("password");
 var copyBtn = document.getElementById("copy");
 var generateBtn = document.getElementById("generate");
 
 generateBtn.addEventListener("click", function(){
-    txtarea.value="";
+    text.value="";
 
     var length = prompt("How many characters would you like for your password?");
     var specialChar = confirm("Would you like to include special characters?");
@@ -43,12 +43,12 @@ generateBtn.addEventListener("click", function(){
         password += temps.charAt(Math.floor(Math.random() * temps.length));
     }
 
-    txtarea.value += password;
+    text.value += password;
 
 });
 
 copyBtn.addEventListener("click", function() {
-    txtarea.select();
+    text.select();
     document.execCommand("copy");
 
     alert("Password has been copied to clipboard");
